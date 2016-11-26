@@ -1,0 +1,77 @@
+#include <stdio.h>
+
+//struct to test size
+struct testsize{
+	char name3; //should be 1byte
+	char name4;	
+	//int age1;
+	//int age2; //should be 4byte
+	//struct testsize *t;
+	};
+
+struct person{
+
+	char name;
+	int age;
+	
+	struct person *nxptr; //manually set this value instead of //struct person *next - holds the address of the next, and this has to be from datatype person (instance of struct) because later we get the address of new struct person from malloc and so the datatypes have to be the same - malloc returns an address of type struct)
+
+	};
+
+int main()
+{
+
+	//###### WORKING WITH POINTERS and MALLOC and manually set pointer for linked-lists chain
+	int i;
+	int n = 3;
+
+	struct person *p1ptr;
+	struct person *p2ptr;
+	
+	p1ptr = (struct person *) malloc(sizeof(struct person));
+	p2ptr = (struct person *) malloc(sizeof(struct person));
+	
+	
+	//Check if the Addresses are different
+	printf("Malloc wurde 2x unabhaengig ausgefuehrt, evtl. sind die speicherbereiche nicht hintereinander");
+	printf ("First Struct-Person Objekt p1ptr Address: %d\n\n", p1ptr);
+	printf ("First Struct-Person Objekt p1ptr Address: %d\n\n", p2ptr);
+
+
+	//Speicherbereich wird in-einem angefordert und kontrolle der Speicherbereiche
+
+	
+/**
+	//kann ich die Adresse auch in einem INT speichern?
+
+	int *test;
+	struct person pers1;
+	test = &pers1; //=> bis daher noch keine Fehler, da die Adresse in einem INT gespeichert werden kann.
+	test->name = 'A';//=> FEHLER, da dem INT die Struktur fehlt, daher muss &pers1 auch in einem Pointer von struct person gespeichert werden. dh. statt "int *test* muss ich dann "struct person *test" machen, dann funktioniert das.
+
+**/
+
+
+	//Calculate Size of test-STRUCT testsize
+	int size;
+	struct testsize tsize;
+	size = sizeof(tsize);
+	printf("Die Groesse von STRUCT tsize (struct testsize) ist: %d\n\n", size);	
+
+		
+	//Calculate Size of current-STRUCT person
+	int size2;
+	struct person psize;
+	size2 = sizeof(psize);
+	printf("Die Groesse von STRUCT psize (struct person) ist: %d\n\n", size2);	
+
+	p1ptr->name = 'D';
+	p1ptr->age = 30;
+
+	printf("Name: %c und das Alter ist: %d\n\n", p1ptr->name, p1ptr->age);
+
+
+	free(p1ptr);
+	free(p2ptr);
+
+}
